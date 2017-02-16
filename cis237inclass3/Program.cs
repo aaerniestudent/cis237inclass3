@@ -14,22 +14,24 @@ namespace cis237inclass3
             UserInterface ui = new UserInterface();           
 
             //Let's make an array to hold a bunch of instances of the SalaryEmployee class
-            SalaryEmployee[] SalaryEmployees = new SalaryEmployee[10];
+            IEmployee[] Employees = new Employee[10];
 
             //Let's add some SalaryEmployees to our array
-            SalaryEmployees[0] = new SalaryEmployee("David", "Barnes", 835.00m);
-            SalaryEmployees[1] = new SalaryEmployee("James", "Kirk", 453.00m);
-            SalaryEmployees[2] = new SalaryEmployee("Jean-Luc", "Picard", 290.00m);
-            SalaryEmployees[3] = new SalaryEmployee("Benjamin", "Sisko", 587.00m);
-            SalaryEmployees[4] = new SalaryEmployee("Kathryn", "Janeway", 194.00m);
-            SalaryEmployees[5] = new SalaryEmployee("Johnathan", "Archer", 135.00m);
+            Employees[0] = new SalaryEmployee("David", "Barnes", 835.00m);
+            Employees[1] = new SalaryEmployee("James", "Kirk", 453.00m);
+            Employees[2] = new SalaryEmployee("Jean-Luc", "Picard", 290.00m);
+            Employees[3] = new HourlyEmployee("Benjamin", "Sisko", 40m, 26.00m);
+            Employees[4] = new HourlyEmployee("Kathryn", "Janeway", 20m, 15.00m);
+            Employees[5] = new SalaryEmployee("Johnathan", "Archer", 135.00m);
 
+            //Index for open spot
+            int nextOpen = 6;
 
             //Get some input from the user
             int choice = ui.GetUserInput();
 
             //While the choice they selected is not 2, continue to do work
-            while (choice != 2)
+            while (choice != 3)
             {
                 //See if the input they sent is equal to 1.
                 if (choice == 1)
@@ -38,12 +40,12 @@ namespace cis237inclass3
                     string outputString = "";
 
                     //Print out the SalaryEmployees in the array
-                    foreach (SalaryEmployee SalaryEmployee in SalaryEmployees)
+                    foreach (IEmployee emp in Employees)
                     {
-                        if (SalaryEmployee != null)
+                        if (emp != null)
                         {
                             //Concat to the outputString
-                            outputString += SalaryEmployee.ToString() +
+                            outputString += emp.ToString() + " " + emp.GetFormattedSalary() +
                                 Environment.NewLine;
                         }
                     }
@@ -52,10 +54,21 @@ namespace cis237inclass3
                     ui.Output(outputString);
                 }
 
+                if (choice == 2)
+                {
+                    Employees[nextOpen++] = getClonedEmployee(Employees[0]);
+                }
+
                 //re-prompt the user for input
                 choice = ui.GetUserInput();
             }
 
+        }
+
+        static IEmployee getClonedEmployee(ICloneable clone)
+        {
+            //cast to IEmployee because clone returns an object
+            return (IEmployee)clone.Clone();
         }
     }
 }

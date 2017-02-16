@@ -36,6 +36,16 @@ namespace cis237inclass3
             return base.ToString() + " " + this.Salary.ToString("C");
         }
 
+        public override string GetFormattedSalary()
+        {
+            return (this.hoursPerWeek * this.hourlyRate) + "+" + WEEKS_PER_YEAR + " = "  + Salary.ToString("C");
+        }
+
+        public override object Clone()
+        {
+            return new HourlyEmployee(this.FirstName, this.LastName, this.hourlyRate, this.hoursPerWeek);
+        }
+
         //*****************************
         //Constructors
         //*****************************

@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace cis237inclass3
 {
-    class SalaryEmployee : Employee
+    public class SalaryEmployee : Employee
     {
         //*****************************
         //Variable / Backing fields
@@ -28,7 +28,17 @@ namespace cis237inclass3
 
         public override string ToString()
         {
-            return base.ToString() + " " + weeklySalary.ToString("C");
+            return base.ToString() + " " + Salary.ToString("C");
+        }
+
+        public override string GetFormattedSalary()
+        {
+            return Salary.ToString("C");
+        }
+
+        public override object Clone()
+        {
+            return new SalaryEmployee(this.FirstName,this.LastName,this.weeklySalary);
         }
 
         //*****************************

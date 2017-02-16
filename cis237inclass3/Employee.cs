@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace cis237inclass3
 {
-    class Employee
+    public abstract class Employee : IEmployee //Implements the IEmployee interface
     {
         protected const decimal WEEKS_PER_YEAR = 52;
         //*****************************
@@ -40,11 +40,30 @@ namespace cis237inclass3
             return FirstAndLastName();
         }
 
+        //an abstract method MUST have no method body
+        //an abstract method MUST be overriden by all childs
+        //abstract based on the information that this class has, 
+        //we have no idea how to calc a salary or format one
+        //implementation must be left to the child
+        public abstract string GetFormattedSalary();        
+
+
+        //A virtual method MUST have a method body
+        //A virtual method can be overriden in chlid classes, but not required
+        //We made this method virtual because we already have all of the needed information to provide a method body. 
+        //we left it virtual in case a subclass would like to override it for some reason.
+        public virtual string GetLastNameFirstName()
+        {
+            return this.lastName + "," + this.firstName;
+        }
+
         //constructors
         public Employee(string FirstName, string LastName)
         {
             this.firstName = FirstName;
             this.lastName = LastName;
         }
+
+        public abstract object Clone();       
     }
 }
